@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "InputSystem_Actions",
     "maps": [
         {
@@ -82,6 +83,15 @@
                     "type": "Button",
                     "id": "641cd816-40e6-41b4-8c3d-04687c349290",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "a171d09e-9b46-403a-8931-0b7f6925575b",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -470,6 +480,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dc0f4e44-c64a-4ba2-b90d-d48ea68d57bf",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

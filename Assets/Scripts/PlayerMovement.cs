@@ -1,54 +1,60 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float kecepatan = 5f;
-    public int skor = 0;
-    public TMP_Text skorText;
     private Vector2 arahGerak;
-    public GameManager gameManager;
+    private Rigidbody2D rb;
+
+    InputAction moveAction;
 
     void Start()
     {
-        UpdateSkorText();
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void OnMove(InputValue value)
-    {
-        arahGerak = value.Get<Vector2>();
+        rb = GetComponent<Rigidbody2D>();
+        moveAction = InputSystem.actions.FindAction("Move");
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Vector3 arah = new Vector3(arahGerak.x, arahGerak.y, 0f);
-        transform.position += arah * kecepatan * Time.deltaTime;
+        if (Time.timeScale == 0f) 
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
+        Move();
+        RotateToDirection();
+    }
+
+    void Move()
+    {
+        if (moveAction != null)
+        {
+            Vector2 moveValue = moveAction.ReadValue<Vector2>();
+            arahGerak = moveValue.normalized;
+            rb.linearVelocity = arahGerak * kecepatan;
+        }
+    }
+
+    void RotateToDirection()
+    {
+        if (arahGerak.sqrMagnitude > 0.01f)
+        {
+            transform.right = arahGerak;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Coin"))
         {
-            Destroy(other.gameObject);
-            skor+= 1;
-            Debug.Log("Skor: " + skor);
-            UpdateSkorText();
-
+            GameManager gameManager = FindAnyObjectByType<GameManager>();
             if (gameManager != null)
             {
                 gameManager.AmbilKoin();
             }
+            Destroy(other.gameObject);
         }
     }
-
-    void UpdateSkorText()
-    {
-        if (skorText != null)
-        {
-            skorText.text = "Skor: " + skor;
-        }
-    }
-    
 }

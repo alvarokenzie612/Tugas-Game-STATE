@@ -43,7 +43,7 @@
     <UnityVersion>6000.5.3f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Users\akenz\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.3.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\akenz\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.3.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.5.3f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.5.3f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.5.3f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
@@ -56,12 +56,21 @@
     <Compile Include="Assets\Scripts\OOP\Enemy.cs" />
     <Compile Include="Assets\Scripts\Events\BelajarDelegate.cs" />
     <Compile Include="Assets\Scripts\OOP\IDamageable.cs" />
+    <Compile Include="Assets\Scripts\Shaders\BelajarShaderKontrol.cs" />
+    <Compile Include="Assets\Scripts\StateZombie.cs" />
+    <Compile Include="Assets\Scripts\OOP\BucketHeadZombie.cs" />
+    <Compile Include="Assets\Scripts\Item.cs" />
+    <Compile Include="Assets\Scripts\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\Events\PenerimaEvent.cs" />
+    <Compile Include="Assets\ScriptableObjects\ItemDetails.cs" />
+    <Compile Include="Assets\Scripts\OOP\ConeZombie.cs" />
     <Compile Include="Assets\Scripts\OOP\FlagZombie.cs" />
+    <Compile Include="Assets\Scripts\ItemSlot.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\OOP\StateZombie.cs" />
     <Compile Include="Assets\Scripts\Events\PemancarEvent.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Shaders\HitFlashSaatKenaDamage.cs" />
+    <Compile Include="Assets\Scripts\GrabableItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

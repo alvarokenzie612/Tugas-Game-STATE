@@ -1,25 +1,26 @@
 using UnityEngine;
+using System;
 
-public class Enemy : MonoBehaviour, IDamageable
+public class Enemy : MonoBehaviour
 {
     [SerializeField] private int hp = 100;
     public float ms = 2f;
 
     protected Transform player;
 
-    [Header("Pengaturan State Machine")]
-    [SerializeField] private float jarakDeteksi = 6f;
-    [SerializeField] private float jarakSerang = 1.5f;
-    [SerializeField] private float jedaSerang = 1f;
+    [Header("State Machine")]
+    [SerializeField] private float JarakDeteksi = 6f;
+    [SerializeField] private float JarakSerang = 1.5f;
+    [SerializeField] private float JedaSerang = 1f;
+    [SerializeField] private bool tampilkanLogState = false;
 
-    //state sekarang
-    private StateZombie currentState = StateZombie.IDLE;
+    private StateZombie state = StateZombie.IDLE;
     private float waktuSerangTerakhir;
 
     protected virtual void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if(playerObj != null)
+        if (playerObj != null)
         {
             player = playerObj.transform;
         }
@@ -27,31 +28,17 @@ public class Enemy : MonoBehaviour, IDamageable
 
     void Update()
     {
+        if (Time.timeScale == 0f) return;
 
         PeriksaTransisi();
-
-         switch (currentState)
-         {
-             case StateZombie.IDLE : PerilakuIdle(); break;
-             case StateZombie.PATROL : PerilakuPatrol(); break;
-             case StateZombie.CHASE : PerilakuChase(); break;
-             case StateZombie.ATTACK : PerilakuAttack();break;
-         }
-    }
-
-    public void Kejar()
-    {
-        if(player == null) return;
-        transform.position = Vector2.MoveTowards(
-            transform.position,
-            player.position,
-            ms * Time.deltaTime
-        );
-    }
-
-    public virtual void Serang()
-    {
-        Debug.Log("Enemy Menyerang");
+        
+        switch(state)
+        {
+            case StateZombie.IDLE: PerilakuIdle(); break;
+            case StateZombie.PATROL: PerilakuPatrol(); break;
+            case StateZombie.CHASE: PerilakuChase(); break;
+            case StateZombie.ATTACK: PerilakuAttack(); break;
+        }
     }
 
     public float JarakKePlayer()
@@ -64,47 +51,69 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         float jarak = JarakKePlayer();
 
-        if (jarak <= jarakSerang)
-            currentState = StateZombie.ATTACK; //sangat dekat = serang
-        else if (jarak <= jarakDeteksi)
-            currentState = StateZombie.CHASE; //terlihat = kejar
+        if (jarak <= JarakSerang)
+        {
+            state = StateZombie.ATTACK;
+        }
+        else if (jarak <= JarakDeteksi)
+        {
+            state = StateZombie.CHASE;
+        }
         else
-            currentState = StateZombie.PATROL; //jauh = keliling
+        {
+            state = StateZombie.PATROL;
+        }  
+    }
+
+    public void Kejar()
+    {
+        if (player == null) return;
+
+        transform.position = Vector2.MoveTowards(
+            transform.position,
+            player.position,
+            ms * Time.deltaTime
+        );
+    }
+
+    public virtual void Serang()
+    {
+        if (tampilkanLogState)
+        {
+            Debug.Log("Enemy Serang");
+        }
     }
 
     void PerilakuIdle()
     {
-          Debug.Log("Enemy sedang IDLE");
+        if (tampilkanLogState)
+        {
+            Debug.Log("Enemy sedang IDLE");
+        }
     }
 
     void PerilakuPatrol()
     {
-        Debug.Log("Zombie sedang Patroli");
+        if (tampilkanLogState)
+        {
+            Debug.Log("Enemy sedang PATROL");
+        }
     }
+
     void PerilakuChase()
     {
         Kejar();
-        Debug.Log("Zombie sedang mengejar player");
+        if (tampilkanLogState)
+        {
+            Debug.Log("Enemy sedang CHASE");
+        }
     }
 
     void PerilakuAttack()
     {
-        Debug.Log("Zombie sedang menyerang player");
-    }
-
-    public void TakeDamage(int jumlah)
-    {
-        hp -= jumlah;
-        Debug.Log($"{gameObject.name} kena damage {jumlah}, Hp sisa : {hp}");
-        if(hp <= 0)
-        {
-            Mati();
+        if (tampilkanLogState)
+        {   
+            Debug.Log("Enemy sedang ATTACK");
         }
-    }
-
-    private void Mati()
-    {
-        Debug.Log($"{gameObject.name} mati!");
-        Destroy(gameObject);
     }
 }

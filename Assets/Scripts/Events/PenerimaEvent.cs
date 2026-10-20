@@ -1,19 +1,21 @@
 using UnityEngine;
 
+// PELAJARAN 2 — Event (si penerima)
+// Tempel ke GameObject LAIN (boleh Empty). Penerima tidak perlu kenal detail pemancar.
 public class PenerimaEvent : MonoBehaviour
 {
-    private void OnEnable()
+    void OnEnable()
     {
-        PemancarEvent.SaatTombolDitekan += Respon;
+        PemancarEvent.OnTekanSpasi += Reaksi;
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
-        PemancarEvent.SaatTombolDitekan -= Respon;
+        PemancarEvent.OnTekanSpasi -= Reaksi;
     }
 
-    private void Respon()
+    void Reaksi()
     {
-        Debug.Log("Penerima Event: Tombol ditekan");
+        Debug.Log("Penerima: aku dengar event spasi!");
     }
 }

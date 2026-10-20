@@ -1,51 +1,49 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
+// PELAJARAN 1 — Delegate
+// Tempel script ini ke Empty GameObject, Play, buka Console.
+// Delegate = "kotak yang bisa menyimpan method" (bukan angka, bukan teks).
 public class BelajarDelegate : MonoBehaviour
 {
+    // Kita buat tipe baru: method yang tidak mengembalikan nilai, dan tidak butuh parameter.
+    delegate void AksiSederhana();
 
-    delegate void delegateContoh();
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        ujiDelegate1();
-        ujiDelegate2();
-        ujiDelegate3();
+        Langkah1_SimpanSatuMethod();
+        Langkah2_BeberapaMethodSekaligus();
+        Langkah3_ActionSiapPakai();
     }
 
-    // Update is called once per frame
-    void Update()
+    void Langkah1_SimpanSatuMethod()
     {
-        
+        AksiSederhana kotak = TulisHalo;
+        kotak();
     }
 
-    void ujiDelegate1()
+    void Langkah2_BeberapaMethodSekaligus()
     {
-        delegateContoh Panggil = PanggilHello;
-        Panggil();
+        AksiSederhana kotak = TulisHalo;
+        kotak += TulisDunia;
+        kotak();
     }
 
-    void ujiDelegate2()
+    void Langkah3_ActionSiapPakai()
     {
-        delegateContoh Panggil = PanggilHello;
-        Panggil += PanggilNama;
-        Panggil();
+        // Action sudah disediakan C#. Sama seperti delegate void ...() di atas.
+        Action kotak = TulisHalo;
+        kotak += TulisDunia;
+        kotak();
     }
 
-    void ujiDelegate3()
+    void TulisHalo()
     {
-        Action halo = PanggilHello;
-        halo += PanggilNama;
-        halo();
+        Debug.Log("Halo");
     }
 
-    void PanggilHello()
+    void TulisDunia()
     {
-        Debug.Log("Hello");
-    }
-
-    void PanggilNama()
-    {
-        Debug.Log("Nama saya Alvaro");
+        Debug.Log("Dunia");
     }
 }
